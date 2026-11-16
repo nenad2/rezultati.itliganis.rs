@@ -286,3 +286,6 @@
 
 /* Mobile: skip the hero on the overview page so the schedule is the first thing on screen */
 @media(max-width:540px){.hero{display:none}}
+/* Season stats: above the schedule on larger screens, below it on phones */
+.stats-bottom{display:none}
+@media(max-width:540px){.stats-top{display:none}.stats-bottom{display:grid;margin:28px 0 0}}
