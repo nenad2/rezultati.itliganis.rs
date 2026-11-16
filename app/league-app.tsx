@@ -21,13 +21,15 @@ function HeroSlides() {
   const [active, setActive] = useState(0);
   // Keep only the images that really exist in public/hero/ (1.jpg, 2.jpg, 3.jpg); fall back to the default picture.
   useEffect(() => {
+    // On phones the hero is hidden (see globals.css), so skip preloading the slides.
+    if (window.matchMedia('(max-width: 540px)').matches) return;
     let alive = true;
     Promise.all(heroImages.map(src => new Promise<string | null>(resolve => { const img = new Image(); img.onload = () => resolve(src); img.onerror = () => resolve(null); img.src = src; })))
       .then(list => { if (alive) setSlides(list.filter((src): src is string => !!src).length ? list.filter((src): src is string => !!src) : [heroFallback]); });
     return () => { alive = false; };
   }, []);
   useEffect(() => {
-    if (slides.length < 2) return;
+    if (slides.length < 2 || window.matchMedia('(max-width: 540px)').matches) return;
     const timer = setInterval(() => setActive(i => (i + 1) % slides.length), heroIntervalMs);
     return () => clearInterval(timer);
   }, [slides.length]);
