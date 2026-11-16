@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { zipSync, strToU8 } from 'fflate';
-import { parseLeague, canonical, REFRESH_MS } from '../lib/workbook.mjs';
+import { parseLeague, canonical, isPostponed, REFRESH_MS } from '../lib/workbook.mjs';
 import seed from '../data/league.json' with { type: 'json' };
 
 const escape = s => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;');
-function fixture() {
+function fixture(extraMatchRows = {}) {
   const tabs = [
-    ['Ligaški deo', {1:{A:'Ligaški deo 2026/27'},4:{A:'HTEC',B:-1,C:1},5:{G:1,H:'HTEC',I:1,J:1,K:0,L:0,M:2,N:0,O:2,P:2},6:{G:2,H:'Boopro',I:1,J:0,K:0,L:1,M:0,N:2,O:-2,P:0},20:{A:'HTEC',B:'Boopro',C:2,D:':',E:0,F:'KOLO 1'},22:{H:'28.9.2026. - 4.10.2026.'},23:{A:'Boopro',B:'HTEC',D:':',F:'KOLO 2'},24:{H:'5.10.2026. - 11.10.2026.'},25:{H:'NEDELJE NADOKNADE 30.11. - 14.12.2026.'}}],
+    ['Ligaški deo', {1:{A:'Ligaški deo 2026/27'},4:{A:'HTEC',B:-1,C:1},5:{G:1,H:'HTEC',I:1,J:1,K:0,L:0,M:2,N:0,O:2,P:2},6:{G:2,H:'Boopro',I:1,J:0,K:0,L:1,M:0,N:2,O:-2,P:0},20:{A:'HTEC',B:'Boopro',C:2,D:':',E:0,F:'KOLO 1'},22:{H:'28.9.2026. - 4.10.2026.'},23:{A:'Boopro',B:'HTEC',D:':',F:'KOLO 2'},24:{H:'5.10.2026. - 11.10.2026.'},25:{H:'NEDELJE NADOKNADE 30.11. - 14.12.2026.'},...extraMatchRows}],
     ['Lista strelaca - Ligaški deo',{3:{A:'Test Player',B:'HTEC',C:2,N:2}}],
     ['Kontakt podaci ekipa i gde imaj',{2:{A:'HTEC Niš',B:'Elektronska, četvrtak 21h',C:'Zeleni',D:'Captain',E:'private@example.test',F:'0601234567'},3:{A:'Boopro tech',B:'Popovac',C:'Beli',D:'Captain B'}}],
     ['Kontakt podaci organizatora',{3:{B:'Commissioner'}}],
@@ -80,4 +80,12 @@ test('sync coalesces requests, rechecks at 10 minutes, and retains good data aft
   assert.equal(fallback.sync.status,'stale');
   assert.equal(fallback.matches[0].awayScore,0);
   assert.equal(fallback.teams[0].points,2);
+});
+
+test('marks a match postponed when its score cells say ODL, and a result still wins', () => {
+  for (const marker of ['ODL', 'odl', 'Odloženo', 'odlozen', 'Postponed', 'PPD']) assert.ok(isPostponed(marker), marker);
+  for (const value of [':', '', null, 0, 'TBD']) assert.ok(!isPostponed(value), String(value));
+  const d = parseLeague(fixture({ 26:{A:'HTEC',B:'Boopro',D:'ODL'}, 27:{A:'Boopro',B:'HTEC',C:'odloženo'}, 28:{A:'HTEC',B:'Boopro',C:1,D:'ODL',E:1}, 29:{A:'Boopro',B:'HTEC',G:'ODL'} }));
+  assert.deepEqual(d.matches.map(m => m.status), ['finished', 'scheduled', 'postponed', 'postponed', 'finished', 'postponed']);
+  assert.equal(d.matches[2].homeScore, null);
 });

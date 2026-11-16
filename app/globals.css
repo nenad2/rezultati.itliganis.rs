@@ -289,3 +289,7 @@
 /* Season stats: above the schedule on larger screens, below it on phones */
 .stats-bottom{display:none}
 @media(max-width:540px){.stats-top{display:none}.stats-bottom{display:grid;margin:28px 0 0}}
+/* Postponed matches (marked "ODL" in the workbook) */
+.match-status.postponed{color:#b5523c;background:#fbeae5}
+.match-card.postponed{border-style:dashed}
+.profile-fixtures .postponed-label{color:#b5523c}
