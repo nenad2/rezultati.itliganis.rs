@@ -22,6 +22,15 @@ Push na GitHub, na Vercel-u: Add New > Project > importuj repo (framework Next.j
 
 Logo lige i logoi timova: ubaci slike u `public/logos/` i upiši putanje u `lib/branding.ts`.
 
+## Plej-in, plej-out i plejof
+
+Sajt sam prepoznaje nove tabove u glavnom dokumentu. Dok ih nema, sve radi kao ranije.
+
+- **PLEJ-IN** i **PLEJ-OUT**: isti raspored kao *Ligaški deo*. Tabela je u kolonama G (mesto), H (ekipa) i I–P, utakmice u A (domaćin), B (gost) i C : E (rezultat), "KOLO n" u F, datumi kola u H, a "Rok za nadoknadu…" u bilo kojoj koloni kola. Ekipe moraju da se zovu kao u ligaškoj tabeli. Odložen meč se označava sa **ODL**, kao u ligi.
+- **Plejof brackets**: mečevi se prepoznaju po oznakama **QF1–QF4**, **P1/P2**, **FINALE** i **Treće mesto**, ne po fiksnim ćelijama. U dva reda ispod oznake su ekipe: oznaka nosioca (IN1, OUT2…), ime ekipe, a odmah desno od imena rezultat. Rezultat se piše kao `2` ili `1(p 3)` kad se ide na penale. Datum (ili TBD) ide iznad oznake meča.
+- Dok plej-in i plej-out nisu završeni, sajt prikazuje **projektovani bracket** po trenutnim tabelama (pre njih po ligaškoj tabeli: 1–6 su IN, 7–12 su OUT). Polufinale, finale i meč za 3. mesto popunjavaju se sami iz rezultata.
+- **Strelci** ostaju u jednom tabu. Kolone sa kolima idu od C do kolone **Suma**, pa se nova kola mogu dodati kao nove kolone ispred nje.
+
 ## League data
 
 The source is the [2026/27 IT Liga workbook](https://docs.google.com/spreadsheets/d/1Vm22gtDxlSCC-1ssUDSN5yedsiCY9tC-v0aZeDWc_9E/edit). The server downloads the entire workbook as XLSX and reads **all five worksheets**, including cached formula values. No Google API key is needed while the workbook remains readable through its shared link.

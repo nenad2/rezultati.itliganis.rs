@@ -293,3 +293,37 @@
 .match-status.postponed{color:#b5523c;background:#fbeae5}
 .match-card.postponed{border-style:dashed}
 .profile-fixtures .postponed-label{color:#b5523c}
+/* Stage switch: league stage / play-in & play-out, and the standings tables */
+.stage-tabs{display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:4px;background:#edf0ef;margin-bottom:16px;max-width:100%;overflow-x:auto}
+.stage-tabs button{font-size:10px;font-weight:650;color:#6f7a78;padding:8px 14px;border-radius:2px;white-space:nowrap}
+.stage-tabs button.selected{background:#fff;color:var(--navy);box-shadow:0 1px 3px #00000012}
+/* Playoff bracket */
+.playoffs-section{margin-bottom:43px}
+.bracket-wrap{display:flex;flex-direction:column;gap:16px}
+.bracket{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.bracket-round{display:flex;flex-direction:column}
+.bracket-round>h3{font-size:9px;letter-spacing:1.4px;font-weight:700;color:#788379;text-transform:uppercase;margin-bottom:12px}
+.bracket-round>div{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:14px}
+.final-round>div{justify-content:center;gap:34px}
+.bracket-match{background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 14px 6px;position:relative}
+.bracket-match.final{border-color:#77acdb;box-shadow:0 6px 20px #0c66b512}
+.bracket-meta{display:flex;justify-content:space-between;font-size:8px;letter-spacing:.8px;font-weight:650;color:#88918e;margin-bottom:8px;text-transform:uppercase}
+.bracket-side{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid #f0f2f1;min-height:40px}
+.bracket-meta+.bracket-side{border-top:0}
+.bracket-side>.team-name{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bracket-side>strong{margin-left:auto;font-family:var(--heading);font-size:20px;font-weight:650;line-height:1;white-space:nowrap}
+.bracket-side>strong small{font-family:var(--body);font-size:10px;color:#7f868f;font-weight:600}
+.bracket-side.lost{opacity:.5}
+.bracket-side.won>.team-name{font-weight:800}
+.bracket-seed{font-size:7px;font-weight:700;letter-spacing:.5px;color:#4e7ca4;background:#e9f1f8;padding:3px 5px;border-radius:2px}
+.bracket-placeholder{font-size:10px;color:#9aa29e;font-style:italic}
+.bracket-note{font-size:8px;color:#4e7ca4;padding:4px 0 6px}
+.third-place .bracket-match{border-style:dashed}
+.bracket-projected{display:flex;align-items:center;gap:8px;font-size:10px;color:#7a6a3c;background:#fff5dd;border:1px solid #ede3c8;padding:10px 14px;border-radius:3px}
+.champion-banner{display:flex;align-items:center;gap:18px;background:var(--navy);color:#fff;border-radius:4px;padding:20px 24px}
+.champion-banner>svg{color:var(--lime-text)}
+.champion-banner .eyebrow{color:#8db7db;margin:0}
+.champion-banner strong{display:block;font-family:var(--heading);font-size:34px;line-height:1.1;font-weight:700}
+.champion-banner>.crest{margin-left:auto}
+@media(max-width:800px){.bracket{grid-template-columns:1fr;gap:22px}.bracket-round>div{gap:10px}.final-round>div{gap:10px}}
+@media(max-width:540px){.stage-tabs button{font-size:9px;padding:7px 10px}.bracket-side>strong{font-size:18px}.champion-banner{padding:16px}.champion-banner strong{font-size:26px}.playoffs-section{margin-bottom:30px}}
